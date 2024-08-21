@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import { images } from '../constants';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {CustomButton} from '../components/CustomButton.jsx';
 
 
 const RootLayout = () => {
@@ -35,8 +36,9 @@ className="w-[136px] h-[14px] absolute -bottom-2 -right-8"
 resizeMode='contain'
 />
             </View>
-            <Text> Where creativity meets innovation: embark on a journey on limitless exploration with Aora</Text>
+            <Text className="text-sm font-pregular text-gray-100 mt-7 text-center"> Where creativity meets innovation: embark on a journey on limitless exploration with Aora</Text>
           </View>
+       <CustomButton/>
         </ScrollView>
       </SafeAreaView>
     </GestureHandlerRootView>
