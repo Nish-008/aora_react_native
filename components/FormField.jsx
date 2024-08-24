@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { icons } from '../constants'
 
@@ -21,15 +22,18 @@ const FormField = ({title, value, placeholder, handleChangeText, otherStyles, ..
         onChangeText={handleChangeText}
         secureTextEntry={title === 'Password' && !showPassword}
         />
-{/* {title === 'Password' && (
-    <TouchableOpacity onPress={()=> setshowPassword(!showPassword)}>
+{title === 'Password' && (
+  <GestureHandlerRootView style={{ flex: 1 }}>
+   <TouchableOpacity onPress={()=> setshowPassword(!showPassword)}>
 <Image
 source={!showPassword ? icons.eye : icons.eyeHide}
 className="w-6 h-6"
 resizeMode='contain'
 />
     </TouchableOpacity>
-)} */}
+    </GestureHandlerRootView>
+  
+)}
       </View>
     </View>
   )
