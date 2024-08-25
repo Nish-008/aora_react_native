@@ -6,7 +6,7 @@ import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { Link, router } from 'expo-router';
-import { SignIn as SignInUser, getSession, deleteSession } from '../../lib/appwrite'; // Import getSession and deleteSession
+import { SignIn as SignInUser, getSession, deleteSession, getCurrentUser } from '../../lib/appwrite'; // Import getSession and deleteSession
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -15,9 +15,11 @@ const SignIn = () => {
   });
 
   const [isSubmitting, setisSubmitting] = useState(false);
+  const [user, setUser] = useState(null); // State to store the current user
+  const [isLogged, setIsLogged] = useState(false); // State to manage authentication status
 
   const submit = async () => {
-    if (!form.email || !form.password) {
+    if (form.email== "" || form.password== "") {
       Alert.alert('Error', 'Please fill in all the fields');
       return;
     }
@@ -30,6 +32,11 @@ const SignIn = () => {
       }
 
       await SignInUser(form.email, form.password);
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLogged(true);
+
+      Alert.alert("Success", "User signed in successfully");
 
       router.replace('/home');
     } catch (error) {
