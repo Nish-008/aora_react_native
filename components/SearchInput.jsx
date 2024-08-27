@@ -15,26 +15,22 @@ const SearchInput = ({title, value, placeholder, handleChangeText, otherStyles, 
         <TextInput
         className="text-base mt-0.5 text-white flex-1 font-pregular"
         value={value}
-        placeholder={placeholder}
+        placeholder="Search for a video topic"
         placeholderTextColor='#7b7b8b'
         onChangeText={handleChangeText}
         secureTextEntry={title === 'Password' && !showPassword}
         />
-{title === 'Password' && (
+
   <GestureHandlerRootView>
-   <TouchableOpacity onPress={()=> setshowPassword(!showPassword)}>
-<Image
-source={!showPassword ? icons.eye : icons.eyeHide}
-className="w-6 h-6"
-resizeMode='contain'
-style={{ marginLeft: 'auto' }}
-/>
+   <TouchableOpacity>
+    <Image
+    source={icons.search}
+    className="w-5 h-5"
+    resizeMode='contain'
+    />
     </TouchableOpacity>
     </GestureHandlerRootView>
-  
-)}
       </View>
-  )
-}
-
+    )
+  }
 export default SearchInput

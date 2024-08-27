@@ -4,16 +4,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { images } from '../../constants';
 import SearchInput from '../../components/SearchInput';
+import Trending from '../../components/Trending';
+import EmptyState from '../../components/EmptyState';
 
 const Home = () => {
   return (
-    <GestureHandlerRootView className="bg-primary">
+    <GestureHandlerRootView className="bg-primary border-2 border-red-500 h-full">
       <SafeAreaView>
         <FlatList
-          data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+        data={[]}
+          // data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
           keyExtractor={(item) => item.id.toString()} // Added toString() for keyExtractor
           renderItem={({ item }) => (
-            <Text className="text-3xl">{item.id}</Text>
+            <Text className="text-3xl text-gray-100">{item.id}</Text>
           )}
           ListHeaderComponent={() => { 
             return ( 
@@ -32,9 +35,23 @@ const Home = () => {
                   </View>
                 </View>
                 <SearchInput/>
+                <View className="w-full flex-1 pt-5 pb-8">
+                <Text className="text-gray-100 text-lg font-pregular mb-3">
+                  Latest Videos
+                </Text>
+                <Trending posts={[{id: 1}, {id: 2}, {id: 3}?? []]}/>
+                </View>
               </View>
             );
           }} 
+          ListEmptyComponent={() => (
+        <EmptyState 
+        title="No Videos Found"
+        subtitle="Be the first one to upload a video!"
+
+
+        />
+          )}
         />
       </SafeAreaView>
     </GestureHandlerRootView>
