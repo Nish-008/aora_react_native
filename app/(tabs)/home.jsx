@@ -1,19 +1,25 @@
 import { View, Text, FlatList, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, RefreshControl } from 'react-native-gesture-handler';
 import { images } from '../../constants';
 import SearchInput from '../../components/SearchInput';
 import Trending from '../../components/Trending';
 import EmptyState from '../../components/EmptyState';
 
 const Home = () => {
+  const [refreshing, setRefreshing] = useState(false)
+  const onRefresh = async () => {
+    setRefreshing(true);
+    // re call videos -> if any new videos appeared
+    setRefreshing(false);
+  }
   return (
     <GestureHandlerRootView className="bg-primary border-2 border-red-500 h-full">
       <SafeAreaView>
         <FlatList
-        data={[]}
-          // data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
+        // data={[]}
+          data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
           keyExtractor={(item) => item.id.toString()} // Added toString() for keyExtractor
           renderItem={({ item }) => (
             <Text className="text-3xl text-gray-100">{item.id}</Text>
@@ -48,10 +54,9 @@ const Home = () => {
         <EmptyState 
         title="No Videos Found"
         subtitle="Be the first one to upload a video!"
-
-
         />
           )}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
         />
       </SafeAreaView>
     </GestureHandlerRootView>
