@@ -7,44 +7,28 @@ import SearchInput from '../../components/SearchInput';
 import Trending from '../../components/Trending';
 import EmptyState from '../../components/EmptyState';
 import {getAllPosts} from '../../lib/appwrite';
+import useAppwrite from '../../lib/useAppwrite';
+import VideoCard from '../../components/VideoCard';
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() =>{
-const fetchData = async () => {
- setIsLoading(true);
- try {
-  const response = await getAllPosts();
-  setData(response);
- } catch (error) {
-  Alert.alert('Error', error.message)
- } finally {
-  setIsLoading(false);
- }
-}
-
-fetchData();
-  }, []);
-  
-console.log(data);
+  const {data : posts, refetch} = useAppwrite(getAllPosts);
 
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
-    // re call videos -> if any new videos appeared
+    await refetch();
     setRefreshing(false);
   }
+
   return (
     <GestureHandlerRootView className="bg-primary border-2 border-red-500 h-full">
       <SafeAreaView>
         <FlatList
         // data={[]}
-          data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
-          keyExtractor={(item) => item.id.toString()} // Added toString() for keyExtractor
+          data={posts}
+          keyExtractor={(item) => item.id} // Added toString() for keyExtractor
           renderItem={({ item }) => (
-            <Text className="text-3xl text-gray-100">{item.id}</Text>
+           <VideoCard video={item}/>
           )}
           ListHeaderComponent={() => { 
             return ( 
